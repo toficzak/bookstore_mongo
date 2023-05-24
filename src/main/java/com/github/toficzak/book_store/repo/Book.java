@@ -2,7 +2,6 @@ package com.github.toficzak.book_store.repo;
 
 import com.github.toficzak.book_store.a.ResponseBook;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Document("books") <-- explicite, absent means same collection name as class name
 public class Book {
@@ -11,8 +10,7 @@ public class Book {
     private String id;
     private String name;
 
-    public Book(String id, String name) {
-        this.id = id;
+    public Book(String name) {
         this.name = name;
     }
 

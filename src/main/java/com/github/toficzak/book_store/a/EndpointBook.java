@@ -20,7 +20,10 @@ private final RepoBook repoBook;
 }
 
 
-//    @PostMapping
-//    ResponseBook create(RequestBook book) {
-//    }
+    @PostMapping
+    ResponseBook create(@RequestBody RequestBook book) {
+        Book bookEntity = new Book(book.name());
+        repoBook.save(bookEntity);
+        return repoBook.findByName(book.name()).toResponse();
+    }
 }
