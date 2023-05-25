@@ -1,19 +1,12 @@
 package com.github.toficzak.book_store.repo;
 
-import com.github.toficzak.book_store.a.RequestBook;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface  RepoBook extends MongoRepository<Book, Long> {
+public interface RepoBook extends MongoRepository<Book, String> {
 
-//    @Query("{name: '?0'}")
-    Book findByName(String name);
-
-
-
+    Optional<Book> findByName(String name);
 }

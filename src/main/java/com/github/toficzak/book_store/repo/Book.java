@@ -3,7 +3,6 @@ package com.github.toficzak.book_store.repo;
 import com.github.toficzak.book_store.a.ResponseBook;
 import org.springframework.data.annotation.Id;
 
-//@Document("books") <-- explicite, absent means same collection name as class name
 public class Book {
 
     @Id
@@ -16,5 +15,13 @@ public class Book {
 
     public ResponseBook toResponse() {
         return new ResponseBook(this.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
