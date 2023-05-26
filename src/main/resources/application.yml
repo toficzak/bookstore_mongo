@@ -1,0 +1,13 @@
+#spring.data.mongodb.authentication-database=admin
+#spring.data.mongodb.username=root
+#spring.data.mongodb.password=root
+spring:
+  data:
+    mongodb:
+      database: book
+      port: 27017
+      host: localhost
+
+  rabbitmq:
+    username: user
+    password: password
