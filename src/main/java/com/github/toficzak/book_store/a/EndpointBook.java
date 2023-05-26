@@ -15,9 +15,11 @@ import java.util.List;
 public class EndpointBook {
 
     private final RepoBook repoBook;
+    private final MessageSender messageSender;
 
     @GetMapping
     List<ResponseBook> get() {
+        messageSender.send();
         return repoBook.findAll().stream()
                 .map(Book::toResponse)
                 .toList();
