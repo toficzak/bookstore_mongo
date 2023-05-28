@@ -1,9 +1,12 @@
 package com.github.toficzak.book_store;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.toficzak.book_store.a.RequestBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -13,6 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,11 +46,31 @@ class HttpTest {
         registry.add("spring.rabbitmq.password", () -> rabbitContainer.getAdminPassword());
     }
 
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Test
     void test() throws Exception {
         this.mockMvc.perform(get("/api/books"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testCreateBook() throws Exception {
+        this.mockMvc.perform(
+                        post("/api/books")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(asJsonString(new RequestBook("testBook"))))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mongoDBContainer.execInContainer("");
     }
 
 }
